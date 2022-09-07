@@ -123,14 +123,22 @@ async function escribir(){
 
 io.on('connection', async socket=>{
     console.log('se conecto un usuario')
-
     io.emit('serverSend:Products', productos) //envio todos los productos
-
-    socket.on('client:enterProduct', productInfo=>{
+   
+    try {
+       socket.on('client:enterProduct', productInfo=>{
         productos.push(productInfo) //recibo productos
         io.emit('serverSend:Products', productos)//emito productos recibidos a los usuarios
-    })
-    // PARTE CHAT _ LADO SERVIDOR
+      })
+   
+    } catch (error) {
+      logger.error();('problema productos lado server', error)
+    }
+      
+     
+    
+    try {
+      // PARTE CHAT _ LADO SERVIDOR
     const authorSchema = new schema.Entity('authors',{},{idAttribute:'mail'})
     const commentSchema = new schema.Entity(
         'comments',
@@ -155,6 +163,10 @@ io.on('connection', async socket=>{
       
         io.emit('serverSend:message', normalizedChat)
     })
+    } catch (error) {
+      logger.error();('problema chat lado server', error)
+    }
+    
     // socket.on('client:message', messageInfo=>{
     //     messages.push(messageInfo) //RECIBO mensaje y lo anido
     //     io.emit('serverSend:message', messages)//EMITO CHATS

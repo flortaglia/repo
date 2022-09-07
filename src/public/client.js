@@ -113,13 +113,14 @@ function sendProduct() {
     }
 }
 //RENDER Productos E INSERTO HTML
-async function renderProducts() {
+async function renderProducts(productsArray) {
     try {
-        let productsArray=[]
-
-         fetch('api/productos-test')
-         .then((product)=>product.json())
-         .then((json)=> productsArray = json )
+        // let productsArray=[]
+        
+        //Productos en automatico lo APAGO!!!!!
+        //  fetch('api/productos-test')
+        //  .then((product)=>product.json())
+        //  .then((json)=> productsArray = json )
       
         // console.log('productsArray',productsArray)
         const response = await fetch('/plantilla.hbs') //traemos la plantilla
@@ -152,9 +153,9 @@ formProducts.addEventListener('submit', event => {
 })
 
 // CAPTURO Productos EMITIDOS AL SERVIDOR
-// socket.on('serverSend:Products', productos=>{
-//       renderProducts(productos)
-// });
+socket.on('serverSend:Products', productos=>{
+      renderProducts(productos)
+});
 
 
 // function loadProducts(){
