@@ -93,11 +93,11 @@ if (args.modo =="cluster" && cluster.isPrimary) {
 
   app.use("/", routes);
   app.use("/", fork);
-  expressServer = app.listen(args.puerto, (err) => {
+  expressServer = app.listen(process.env.PORT || 8080, (err) => {
       if(err) {
           console.log(`Se produjo un error al iniciar el servidor: ${err}`)
       } else {
-          console.log(`Servidor escuchando puerto: ${args.puerto}`)
+          console.log(`Servidor escuchando puerto: ${process.env.PORT}`)
       }
   })
  
